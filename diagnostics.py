@@ -1,9 +1,8 @@
-
 """
 Module: diagnostics.py
 Author: Amandeep Singh
-Date Written: 22-Jan-2023
-Date Modified: 22-Jan-2023
+Date Written: 23-Jan-2023
+Date Modified: 23-Jan-2023
 
 Description:
     - Module performs following diagnostics
@@ -56,7 +55,7 @@ def model_predictions():
         )
     )
     # read test data
-    test_data = pd.read_csv(
+    data = pd.read_csv(
         os.path.join(test_data_path, "testdata.csv"),
         dtype={
             "corporation": str,
@@ -74,7 +73,7 @@ def model_predictions():
     )
     # predict the values
     preds = model.predict(
-        test_data.loc[:,
+        data.loc[:,
                       ["lastmonth_activity",
                        "lastyear_activity",
                        "number_of_employees"]
