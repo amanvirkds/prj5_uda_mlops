@@ -1,4 +1,3 @@
-
 """
 Module: reporting.py
 Author: Amandeep Singh

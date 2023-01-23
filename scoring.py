@@ -85,6 +85,8 @@ def score_model():
     ) as scoring_file:
         scoring_file.write(str(f1_score))
 
+    return f1_score
+
 
 if __name__ == "__main__":
     score_model()

@@ -42,9 +42,15 @@ model_path = os.path.join(config['output_model_path'])
 # Function to get model predictions
 
 
-def model_predictions():
+def model_predictions(data):
     """
     read the deployed model and a test dataset, calculate predictions
+
+    Arguments:
+        data: dataset on which predictions need to be made
+
+    Returns:
+        list of predicted values
     """
 
     # load model
@@ -54,23 +60,7 @@ def model_predictions():
             'rb'
         )
     )
-    # read test data
-    data = pd.read_csv(
-        os.path.join(test_data_path, "testdata.csv"),
-        dtype={
-            "corporation": str,
-            "lastmonth_activity": int,
-            "lastyear_activity": int,
-            "number_of_employees": int,
-            "exited": int
-        },
-        usecols=[
-            "lastmonth_activity",
-            "lastyear_activity",
-            "number_of_employees",
-            "exited"
-        ]
-    )
+
     # predict the values
     preds = model.predict(
         data.loc[:,
@@ -88,6 +78,9 @@ def model_predictions():
 def dataframe_summary():
     """
     calculate the summary statistics of a dataset
+
+    Returns:
+        list of summary stats
     """
 
     # read test data
@@ -107,7 +100,9 @@ def dataframe_summary():
         ]
     )
     summary_statistics_list = []
-    for col in data.columns:
+    for col in ["lastmonth_activity",
+                "lastyear_activity",
+                "number_of_employees"]:
         stats = []
         stats.append(data[col].mean())
         stats.append(data[col].median())
@@ -121,6 +116,9 @@ def dataframe_summary():
 def dataframe_missing_values():
     """
     calculate the missing values in a dataset
+
+    Returns:
+        list of missing value percentage
     """
 
     # read test data
@@ -134,11 +132,12 @@ def dataframe_missing_values():
             "exited": int
         }
     )
+    # list with missing pct value for each column
     missing_pct_list = [
         missing / data.shape[0] for missing in data.isna().sum().tolist()
     ]
 
-    # return value should be a list containing all summary statistics
+
     return missing_pct_list
 
 # Function to get timings
@@ -179,7 +178,24 @@ def outdated_packages_list():
 
 
 if __name__ == '__main__':
-    model_predictions()
+    # read test data
+    data = pd.read_csv(
+        os.path.join(test_data_path, "testdata.csv"),
+        dtype={
+            "corporation": str,
+            "lastmonth_activity": int,
+            "lastyear_activity": int,
+            "number_of_employees": int,
+            "exited": int
+        },
+        usecols=[
+            "lastmonth_activity",
+            "lastyear_activity",
+            "number_of_employees",
+            "exited"
+        ]
+    )
+    model_predictions(data)
     dataframe_summary()
     dataframe_missing_values()
     execution_time()
