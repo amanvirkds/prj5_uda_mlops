@@ -35,9 +35,9 @@ import timeit
 with open('config.json', 'r') as f:
     config = json.load(f)
 
-dataset_csv_path = os.path.join(config['output_folder_path'])
+output_folder_path = os.path.join(config['output_folder_path'])
 test_data_path = os.path.join(config['test_data_path'])
-model_path = os.path.join(config['output_model_path'])
+prod_deployment_path = os.path.join(config['prod_deployment_path'])
 
 # Function to get model predictions
 
@@ -56,7 +56,7 @@ def model_predictions(data):
     # load model
     model = pickle.load(
         open(
-            os.path.join(model_path, 'trainedmodel.pkl'),
+            os.path.join(prod_deployment_path, 'trainedmodel.pkl'),
             'rb'
         )
     )
@@ -85,7 +85,7 @@ def dataframe_summary():
 
     # read test data
     data = pd.read_csv(
-        os.path.join(test_data_path, "testdata.csv"),
+        os.path.join(output_folder_path, "finaldata.csv"),
         dtype={
             "corporation": str,
             "lastmonth_activity": int,
@@ -123,7 +123,7 @@ def dataframe_missing_values():
 
     # read test data
     data = pd.read_csv(
-        os.path.join(test_data_path, "testdata.csv"),
+        os.path.join(output_folder_path, "finaldata.csv"),
         dtype={
             "corporation": str,
             "lastmonth_activity": int,
@@ -180,7 +180,7 @@ def outdated_packages_list():
 if __name__ == '__main__':
     # read test data
     data = pd.read_csv(
-        os.path.join(test_data_path, "testdata.csv"),
+        os.path.join(output_folder_path, "finaldata.csv"),
         dtype={
             "corporation": str,
             "lastmonth_activity": int,

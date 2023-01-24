@@ -12,6 +12,7 @@ Description:
 import pickle
 import json
 import os
+
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
 from diagnostics import model_predictions
@@ -62,7 +63,7 @@ def score_model():
         )
     )
 
-    preds = model_predictions()
+    preds = model_predictions(data)
     cm = metrics.confusion_matrix(data.exited, preds)
 
     # Setting default size of the plot

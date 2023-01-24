@@ -26,7 +26,7 @@ with open('config.json', 'r') as f:
 
 input_folder_path = config['input_folder_path']
 output_folder_path = config['output_folder_path']
-record_datasource_path = config['record_datasoruce_path']
+record_datasource_path = config['record_datasource_path']
 RECORD_DATASORUCE_FILE = "ingestedfiles.txt"
 
 
@@ -65,7 +65,7 @@ def merge_multiple_dataframe():
             records_list.append(records)
 
     with open(
-        os.path.join(record_datasource_path, RECORD_DATASORUCE_FILE), "w"
+        os.path.join(output_folder_path, RECORD_DATASORUCE_FILE), "w"
     ) as record_file:
         for record in records_list:
             for element in record:

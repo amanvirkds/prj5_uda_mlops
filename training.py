@@ -32,7 +32,6 @@ model_path = os.path.join(config['output_model_path'])
 
 # Function for training the model
 
-
 def train_model():
     """
     load the data, train logistic regression and save the model

@@ -22,28 +22,32 @@ test_data_path = os.path.join(config['test_data_path'])
 model_path = os.path.join(config['output_model_path'])
 
 
-#Call each API endpoint and store the responses
-response1 = requests.post(
-    f'{URL}/prediction',
-    json={
-        'filepath': os.path.join(test_data_path, 'testdata.csv')}).text
-response2 = requests.get(f'{URL}/scoring').text
-response3 = requests.get(f'{URL}/summarystats').text
-response4 = requests.get(f'{URL}/diagnostics').text
+def api_calls():
+    #Call each API endpoint and store the responses
+    response1 = requests.post(
+        f'{URL}/prediction',
+        json={
+            'filepath': os.path.join(test_data_path, 'testdata.csv')}).text
+    response2 = requests.get(f'{URL}/scoring').text
+    response3 = requests.get(f'{URL}/summarystats').text
+    response4 = requests.get(f'{URL}/diagnostics').text
 
-#combine all API responses
-responses = (
-    "Model Predictions: \n"
-    + response1 + "\n\n" 
-    "Scoring: \n"
-    + response2 + "\n\n" 
-    "Summary Stats: \n"
-    + response3 + "\n\n" 
-    "Diagnosis: \n"
-    + response4)
+    #combine all API responses
+    responses = (
+        "Model Predictions: \n"
+        + response1 + "\n\n" 
+        "Scoring: \n"
+        + response2 + "\n\n" 
+        "Summary Stats: \n"
+        + response3 + "\n\n" 
+        "Diagnosis: \n"
+        + response4)
 
-#write the responses to your workspace
-with open(os.path.join(model_path, 'apireturns.txt'), 'w') as file:
-    file.write(responses)
+    #write the responses to your workspace
+    with open(os.path.join(model_path, 'apireturns.txt'), 'w') as file:
+        file.write(responses)
+
+if __name__ == '__main__':
+    api_calls()
 
 

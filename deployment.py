@@ -24,7 +24,7 @@ from sklearn.linear_model import LogisticRegression
 with open('config.json', 'r') as f:
     config = json.load(f)
 
-dataset_csv_path = os.path.join(config['output_folder_path'])
+output_folder_path = os.path.join(config['output_folder_path'])
 model_path = os.path.join(config['output_model_path'])
 prod_deployment_path = os.path.join(config['prod_deployment_path'])
 
@@ -54,19 +54,12 @@ def store_model_into_pickle(model):
         scoring_file.write(contents)
 
     # save the data file
-    final_df = pd.read_csv(
-        os.path.join(dataset_csv_path, "finaldata.csv"),
-        dtype={
-            "corporation": str,
-            "lastmonth_activity": int,
-            "lastyear_activity": int,
-            "number_of_employees": int,
-            "exited": int
-        }
-    )
-    final_df.to_csv(
-        os.path.join(prod_deployment_path, "finaldata.csv"), index=False
-    )
+    with open(os.path.join(output_folder_path, "ingestedfiles.txt"), "r") as f:
+        contents = f.read()
+    with open(
+        os.path.join(prod_deployment_path, "ingestedfiles.txt"), "w"
+    ) as scoring_file:
+        scoring_file.write(contents)
 
 
 if __name__ == "__main__":

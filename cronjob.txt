@@ -1,0 +1,1 @@
+10 * * * * python /output/workdir/udacity/mlops/prj4_uda_mlops/fullprocess.py
